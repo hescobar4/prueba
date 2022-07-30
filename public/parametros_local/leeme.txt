@@ -1,0 +1,3 @@
+Se agregar el archivo htaccess en la carpeta "Application" y otro externo, esto es para que funcione localmente, anexando dentro de este archivo el nombre de la carpeta del proyecto.
+
+En el archivo "config" se cambia el apuntador del Base_url sin el solo http sin la "s"

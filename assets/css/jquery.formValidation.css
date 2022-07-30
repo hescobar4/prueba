@@ -1,0 +1,69 @@
+.fv-danger {
+  border-color: #a94442;
+}
+
+.fv-danger .help-block,
+.fv-danger .control-label,
+.fv-danger .radio,
+.fv-danger .checkbox,
+.fv-danger .radio-inline,
+.fv-danger .checkbox-inline,
+.fv-danger.radio label,
+.fv-danger.checkbox label,
+.fv-danger.radio-inline label,
+.fv-danger.checkbox-inline label {
+  color: #a94442;
+}
+.fv-danger .form-control {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.fv-danger .form-control:focus {
+  border-color: #843534;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+.fv-danger .input-group-addon {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #a94442;
+}
+.fv-danger .form-control-feedback {
+  color: #a94442;
+}
+
+.fv-success {
+  border-color: #a94442;
+}
+
+.fv-success .help-block,
+.fv-success .control-label,
+.fv-success .radio,
+.fv-success .checkbox,
+.fv-success .radio-inline,
+.fv-success .checkbox-inline,
+.fv-success.radio label,
+.fv-success.checkbox label,
+.fv-success.radio-inline label,
+.fv-success.checkbox-inline label {
+  color: #2aba98;
+}
+.fv-success .form-control {
+  border-color: #2aba98;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.fv-success .form-control:focus {
+  border-color: #348538;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #a2cf83;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #a2cf83;
+}
+.fv-success .input-group-addon {
+  color: #2aba98;
+  background-color: #def2df;
+  border-color: #2aba98;
+}
+.fv-success .form-control-feedback {
+  color: #2aba98;
+}
