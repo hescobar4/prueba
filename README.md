@@ -15,7 +15,7 @@ Datos para iniciar sesion
 Usuario: 123
 Password: 123
 
-Una vez instalada el MySQL version 5.6.40 se debe colocar la carpetra del proyecto en la carpeta htdocs y ejecurar en el explorador como http://localhost/prueba, recuerde que antes debe haber incialido el servicio de apache, MySQL y haber generado el script en la base de datos llamada prueba.
+Una vez instalada el MySQL version 5.6.40 se debe colocar la carpeta del proyecto en la carpeta htdocs y ejecurar en el explorador como http://localhost/prueba, recuerde que antes debe haber incializado el servicio de apache, MySQL y haber generado el script en la base de datos llamada prueba con cotejamiento utf8_spanish_ci.
 
 
 
