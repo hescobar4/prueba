@@ -24,7 +24,7 @@ var validarLogin = function () {
         success: function (response) {
             var respuesta = response.retorno;
             if (respuesta.success === true) {
-                window.location = BASE_URL + 'Menu';
+                window.location = BASE_URL + 'Empleados/Menu';
             } else {
                 notificar(respuesta.success, respuesta.msg);
             }

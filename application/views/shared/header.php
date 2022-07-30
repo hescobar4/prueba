@@ -42,18 +42,8 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">HSoft <sup>Admin</sup></div>
+                <div class="sidebar-brand-text mx-3">Prueba <sup>Admin</sup></div>
             </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item menuitem" name="menuDash" style="cursor: pointer">
-                <a class="nav-link" data-modulo="Home" name="btnApp">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Empleados</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">

@@ -222,7 +222,6 @@
     $.getScript('<?php echo base_url(); ?>assets/js/shared/Util.js');
     $.getScript('<?php echo base_url(); ?>assets/js/shared/helpers.js');
     $.getScript("<?php echo base_url(); ?>assets/js/Modulos/Usuarios/Micuenta.js");
-    $.getScript("<?php echo base_url(); ?>assets/js/Modulos/Externo.js");
 
     var BASE_URL = "<?php echo base_url(); ?>";
     var FECHA_ACTUAL = "<?php echo date("Y-m-d"); ?>";
