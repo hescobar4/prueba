@@ -3,7 +3,7 @@ var listadoEmpleados = $("[name=listadoEmpleados]");
 var modalEmpleado = $("[name=modalEmpleados]");
 var compArea = $("[name=sArea]");
 var compRoles = $("[name=listadoRoles]");
-var btnGudarEmpleado = $("[name=btnGuardarEmpleado]");
+var btnGuadarEmpleado = $("[name=btnGuardarEmpleado]");
 
 var modelFilaArea = '<option value="{0}">{1}</option>';
 var modelFilaSeleccione = '<option selected="true" value="">Seleccione</option>';
@@ -237,7 +237,7 @@ $(document).ready(function () {
         ejecutarModal('modalEmpleados');
     });
 
-    btnGudarEmpleado.click(function () {
+    btnGuadarEmpleado.click(function () {
         var validate = $("[name = formularioEmpleados]").formValidation({
             returnData: true
         });
