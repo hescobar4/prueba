@@ -125,51 +125,44 @@ class Empleados_model extends CI_Model
                     ($datosFormulario['checkBoletin'] == 0) ? 0 : 1,
                     trim($datosFormulario['textDescripcion'])
                 );
-                $result = $this->db->query($sqlInsertarEmpleado);
+                $this->db->query($sqlInsertarEmpleado);
+
+                $sqlConsultaCodEmpleado = sprintf(
+                    "SELECT E.id 
+                        FROM empleado E
+                        WHERE E.nombre = '%s'
+                            AND E.email = '%s'
+                            AND E.sexo = '%s'
+                            AND E.area_id = %s",
+                    trim(strtoupper($datosFormulario['textNombre'])),
+                    trim($datosFormulario['textEmail']),
+                    ($datosFormulario['radioSexo'] == 1) ? "M" : "F",
+                    $datosFormulario['sArea']
+                );
+                $result = $this->db->query($sqlConsultaCodEmpleado);
+                $resultadoConsultaCodEmpleado = $result->result_array();
+                $result->free_result();
+                if (count($resultadoConsultaCodEmpleado) > 0) {
+                    for ($i = 0; $i < count($datosRoles); $i++) {
+                        $sqlInsertaRol = sprintf(
+                            "INSERT INTO `empleado_rol`(
+                                `empleado_id`, 
+                                `rol_id`) VALUES (
+                                    %s,
+                                    %s
+                                )",
+                            $resultadoConsultaCodEmpleado[0]['id'],
+                            $datosRoles[$i]
+                        );
+                        $this->db->query($sqlInsertaRol);
+                    }
+                }
                 if ($this->db->trans_status() === FALSE) {
                     $this->db->trans_rollback();
                     return array(
                         "success" => false,
                         "msg" => "Error interno, contacte al departamento de sistemas"
                     );
-                } else {
-                    $sqlConsultaCodEmpleado = sprintf(
-                        "SELECT E.id 
-                        FROM empleado E
-                        WHERE E.nombre = '%s'
-                            AND E.email = '%s'
-                            AND E.sexo = '%s'
-                            AND E.area_id = %s",
-                        trim(strtoupper($datosFormulario['textNombre'])),
-                        trim($datosFormulario['textEmail']),
-                        ($datosFormulario['radioSexo'] == 1) ? "M" : "F",
-                        $datosFormulario['sArea']
-                    );
-                    $result = $this->db->query($sqlConsultaCodEmpleado);
-                    $resultadoConsultaCodEmpleado = $result->result_array();
-                    $result->free_result();
-                    if (count($resultadoConsultaCodEmpleado) > 0) {
-                        for ($i = 0; $i < count($datosRoles); $i++) {
-                            $sqlInsertaRol = sprintf(
-                                "INSERT INTO `empleado_rol`(
-                                `empleado_id`, 
-                                `rol_id`) VALUES (
-                                    %s,
-                                    %s
-                                )",
-                                $resultadoConsultaCodEmpleado[0]['id'],
-                                $datosRoles[$i]
-                            );
-                            $result = $this->db->query($sqlInsertaRol);
-                            if ($this->db->trans_status() === FALSE) {
-                                $this->db->trans_rollback();
-                                return array(
-                                    "success" => false,
-                                    "msg" => "Error interno, contacte al departamento de sistemas"
-                                );
-                            }
-                        }
-                    }
                 }
                 $this->db->trans_commit();
                 $this->db->close();
@@ -197,51 +190,37 @@ class Empleados_model extends CI_Model
                 trim($datosFormulario['textDescripcion']),
                 $datosFormulario['codigoEmpleado']
             );
-            $result = $this->db->query($sqlActualiza);
+            $this->db->query($sqlActualiza);
+
+            $sqlEliminaRoles = sprintf("DELETE FROM `empleado_rol` WHERE empleado_id=%s", $datosFormulario['codigoEmpleado']);
+            $this->db->query($sqlEliminaRoles);
+
+            for ($i = 0; $i < count($datosRoles); $i++) {
+                $sqlInsertaRol = sprintf(
+                    "INSERT INTO `empleado_rol`(
+                            `empleado_id`, 
+                            `rol_id`) VALUES (
+                                %s,
+                                %s
+                            )",
+                    $datosFormulario['codigoEmpleado'],
+                    $datosRoles[$i]
+                );
+                $this->db->query($sqlInsertaRol);
+            }
             if ($this->db->trans_status() === FALSE) {
                 $this->db->trans_rollback();
                 return array(
                     "success" => false,
                     "msg" => "Error interno, contacte al departamento de sistemas"
                 );
-            } else {
-                $sqlEliminaRoles = sprintf("DELETE FROM `empleado_rol` WHERE empleado_id=%s", $datosFormulario['codigoEmpleado']);
-                $result = $this->db->query($sqlEliminaRoles);
-                if ($this->db->trans_status() === FALSE) {
-                    $this->db->trans_rollback();
-                    return array(
-                        "success" => false,
-                        "msg" => "Error interno, contacte al departamento de sistemas"
-                    );
-                } else {
-                    for ($i = 0; $i < count($datosRoles); $i++) {
-                        $sqlInsertaRol = sprintf(
-                            "INSERT INTO `empleado_rol`(
-                            `empleado_id`, 
-                            `rol_id`) VALUES (
-                                %s,
-                                %s
-                            )",
-                            $datosFormulario['codigoEmpleado'],
-                            $datosRoles[$i]
-                        );
-                        $result = $this->db->query($sqlInsertaRol);
-                        if ($this->db->trans_status() === FALSE) {
-                            $this->db->trans_rollback();
-                            return array(
-                                "success" => false,
-                                "msg" => "Error interno, contacte al departamento de sistemas"
-                            );
-                        }
-                    }
-                    $this->db->trans_commit();
-                    $this->db->close();
-                    return array(
-                        "success" => true,
-                        "msg" => "Información actualizada correctamente."
-                    );
-                }
             }
+            $this->db->trans_commit();
+            $this->db->close();
+            return array(
+                "success" => true,
+                "msg" => "Información actualizada correctamente."
+            );
         }
     }
 
@@ -269,30 +248,26 @@ class Empleados_model extends CI_Model
     public function eliminarEmpleado($codEmpleado)
     {
         $this->db->trans_begin();
+
         $sqlEliminaRoles = sprintf("DELETE FROM `empleado_rol` WHERE empleado_id=%s", $codEmpleado);
-        $result = $this->db->query($sqlEliminaRoles);
+        $this->db->query($sqlEliminaRoles);
+
+        $sqlEliminaRoles = sprintf("DELETE FROM `empleado` WHERE id=%s", $codEmpleado);
+        $this->db->query($sqlEliminaRoles);
+
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
             return array(
                 "success" => false,
                 "msg" => "Error interno, contacte al departamento de sistemas"
             );
-        } else {
-            $sqlEliminaRoles = sprintf("DELETE FROM `empleado` WHERE id=%s", $codEmpleado);
-            $result = $this->db->query($sqlEliminaRoles);
-            if ($this->db->trans_status() === FALSE) {
-                $this->db->trans_rollback();
-                return array(
-                    "success" => false,
-                    "msg" => "Error interno, contacte al departamento de sistemas"
-                );
-            }
-            $this->db->trans_commit();
-            $this->db->close();
-            return array(
-                "success" => true,
-                "msg" => "Empleado eliminado correctamente."
-            );
         }
+
+        $this->db->trans_commit();
+        $this->db->close();
+        return array(
+            "success" => true,
+            "msg" => "Empleado eliminado correctamente."
+        );
     }
 }
