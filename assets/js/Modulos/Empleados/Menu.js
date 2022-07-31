@@ -212,7 +212,6 @@ var eveEliminar = function () {
                         notificar(r.data.success, r.data.msg);
                         if (r.data.success) {
                             cargarEmpleados();
-                            ocultarModal('modalEmpleados');
                         }
                         hideLoading();
                     }
@@ -246,6 +245,12 @@ $(document).ready(function () {
             notificar(false, validate.message);
         } else {
             var datosFormuario = validate.data;
+            const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if ((emailRegex.test(datosFormuario['textEmail']) === false)) {
+                notificar(false, "Ingrese un Correo valido.");
+                return;
+            }
+
             if (datosFormuario['checkRoles'] != "") {
                 let datosRoles = validarRoles('checkRoles');
                 showLoading();
