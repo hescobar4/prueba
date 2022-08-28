@@ -41,6 +41,7 @@ class Menu extends CI_Controller
 
     public function eliminarEmpleado()
     {
+        //funcion para eliminar empleado
         $codEmpleado = $this->input->post('codEmpleado');
         $data = $this->Empleados_model->eliminarEmpleado($codEmpleado);
         echo json_encode(array("data" => $data));
